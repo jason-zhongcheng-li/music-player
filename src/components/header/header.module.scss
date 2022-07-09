@@ -1,0 +1,35 @@
+@value mobileMargin, laptopMargin, laptop, layoutHeaderHeight, laptopMaxWidth, tablet from '../../styles/metrics.module.scss';
+
+@value colorWhite from '../../styles/colors.module.scss';
+
+.header {
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: colorWhite;
+  box-shadow: -1px 1px 6px 0px rgba(51, 51, 51, 0.25);
+
+  &Content {
+    display: flex;
+    height: 4rem;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (min-width: laptop) {
+  .header {
+    padding-left: laptopMargin;
+    padding-right: laptopMargin;
+
+    &Content {
+      max-width: laptopMaxWidth;
+      margin: 0 auto;
+      padding: 0;
+    }
+  }
+}

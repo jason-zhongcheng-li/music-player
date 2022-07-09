@@ -1,0 +1,11 @@
+.svg {
+  display: inline-flex;
+  svg {
+    width: 1em;
+    height: 100%; /* 100% instead of auto because of Safari */
+  }
+}
+
+.svg .paymentLogo {
+  width: 4.5rem;
+}

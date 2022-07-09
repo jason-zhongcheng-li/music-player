@@ -1,0 +1,10 @@
+.appContainer {
+  position: relative;
+  width: 100vw;
+  max-width: 100%;
+}
+
+.appContent {
+  padding-top: 4rem;
+  min-height: calc(100vh - 4rem);
+}
