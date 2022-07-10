@@ -12,7 +12,7 @@
   box-shadow: 12px 12px 40px colorShadow;
 }
 
-.albumList {
+.songList {
   border-top-left-radius: borderRadius;
   border-bottom-left-radius: borderRadius;
   background-color: colorBackground;
@@ -20,7 +20,7 @@
   width: 50%;
 }
 
-.songList {
+.album {
   position: relative;
   border-top-right-radius: borderRadius;
   border-bottom-right-radius: borderRadius;

@@ -6,6 +6,7 @@ import styles from './music-controller.module.scss';
 
 interface MusicControllerProps {
   autoPlay?: boolean;
+  className?: string;
 }
 
 const MusicController = ({ autoPlay }: MusicControllerProps) => {
