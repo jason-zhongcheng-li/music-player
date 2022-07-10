@@ -1,0 +1,29 @@
+@value laptop from '../../styles/metrics.module.scss';
+@value colorBackground, colorBorder from '../../styles/colors.module.scss';
+
+.mediaPlayer {
+  max-width: 90vw;
+  margin: 3rem auto;
+  border: 2px solid colorBorder;
+  height: 60vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.albumList {
+  background-color: colorBackground;
+  overflow-y: auto;
+  width: 50%;
+}
+
+.songList {
+  position: relative;
+  background-color: colorBackground;
+  width: 100%;
+}
+
+@media (min-width: laptop) {
+  .mediaPlayer {
+    max-width: 60vw;
+  }
+}
