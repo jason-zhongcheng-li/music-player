@@ -1,0 +1,31 @@
+.bars {
+  position: relative;
+  height: 8px;
+  width: 2rem;
+  transform: scale(2) translateX(-50%);
+}
+
+.bar {
+  position: absolute;
+  bottom: 0px;
+  height: 2px;
+  width: 1px;
+  background: #000;
+
+  transform: translateY(50%);
+}
+
+.enabled {
+  animation: sound 0ms -800ms linear infinite alternate;
+}
+
+@keyframes sound {
+  0% {
+    opacity: 0.35;
+    height: 2px;
+  }
+  100% {
+    opacity: 1;
+    height: 6px;
+  }
+}
