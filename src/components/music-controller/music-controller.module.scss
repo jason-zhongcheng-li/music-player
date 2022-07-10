@@ -1,0 +1,13 @@
+.controllers {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 3rem;
+  margin: 0.5rem auto;
+  width: 100%;
+
+  span {
+    margin: 1rem;
+    cursor: pointer;
+  }
+}

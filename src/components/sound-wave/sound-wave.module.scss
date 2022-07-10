@@ -1,14 +1,14 @@
 .bars {
   position: relative;
-  height: 8px;
-  width: 2rem;
+  height: 16px;
+  width: 4rem;
   transform: scale(2) translateX(-50%);
 }
 
 .bar {
   position: absolute;
   bottom: 0px;
-  height: 2px;
+  height: 8px;
   width: 1px;
   background: #000;
 
@@ -22,10 +22,10 @@
 @keyframes sound {
   0% {
     opacity: 0.35;
-    height: 2px;
+    height: 5px;
   }
   100% {
     opacity: 1;
-    height: 6px;
+    height: 20px;
   }
 }

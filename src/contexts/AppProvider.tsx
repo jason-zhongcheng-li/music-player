@@ -1,11 +1,12 @@
 import { PropsWithChildren } from 'react';
 import { createSafeContext } from '../helper/context-helpers';
 import { MusicProvider } from './MusicProvider';
+import { SVGT } from '../components/svg/svg';
 
 interface AppProviderState {}
 
 interface AppProviderProps {
-  logo?: any;
+  logo?: SVGT;
 }
 
 const AppProviderContext = createSafeContext<AppProviderState>();

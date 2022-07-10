@@ -3,6 +3,7 @@ import { Image } from '../image/image';
 import { Svg } from '../svg/svg';
 import { useITunes } from '../../contexts/MusicProvider';
 import SoundWave from '../sound-wave/sound-wave';
+import MusicController from '../music-controller/music-controller';
 
 import styles from './album.module.scss';
 
@@ -16,6 +17,7 @@ const Album = () => {
       setArtistViewUrl(collection?.album.artworkUrl100);
     }
     if (Array.isArray(collection?.songs)) {
+      // select 1st song as default audio
       selectSong(collection.songs[0]?.trackId);
     }
     return () => setArtistViewUrl(null);
@@ -37,6 +39,7 @@ const Album = () => {
         {artistViewUrl && (
           <>
             <Image image={{ url: artistViewUrl }} className={styles.albumArtImage} />
+            <MusicController />
           </>
         )}
       </div>
