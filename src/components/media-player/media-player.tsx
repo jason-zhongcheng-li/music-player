@@ -11,7 +11,7 @@ import { Collection } from '../../models/collection';
 import styles from './media-player.module.scss';
 
 const MediaPlayer = () => {
-  const { searchSongs, isLoading, setPlayList, isPlaying, lookupSongsInAlbum, currSongIndex, playMusic, isMobile } =
+  const { searchSongs, isLoading, setPlayList, isPlaying, lookupSongsInAlbum, currSong, playMusic, isMobile } =
     useITunes();
   const [showController, setShowController] = useState<boolean>(false);
   const [searchResult, setSearchResult] = useState<Array<Song>>(null);
@@ -44,7 +44,7 @@ const MediaPlayer = () => {
           playMusic={playMusic}
           songs={searchResult}
           isPlaying={isPlaying}
-          currSongIndex={currSongIndex}
+          currSong={currSong}
           setPlayList={setPlayList}
           autoPlay={isMobile}
         />
@@ -54,7 +54,7 @@ const MediaPlayer = () => {
           <Album
             isLoading={isLoading}
             playMusic={playMusic}
-            currSongIndex={currSongIndex}
+            currSong={currSong}
             collection={collection}
             isPlaying={isPlaying}
           />

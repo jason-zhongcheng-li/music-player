@@ -1,4 +1,4 @@
-@value colorBackground, colorBorder, colorBoxShadow from '../../styles/colors.module.scss';
+@value colorBackground, colorBorder, colorBoxShadow, colorGreyBase from '../../styles/colors.module.scss';
 @value laptop, laptopLarge, borderRadius from '../../styles/metrics.module.scss';
 
 .wrapper {
@@ -34,6 +34,7 @@
   padding: 1rem 0;
   border-bottom: 2px solid colorBorder;
   left: 20%;
+  cursor: pointer;
 
   &Name {
     position: relative;
@@ -41,7 +42,6 @@
     align-items: center;
     justify-content: flex-start;
     padding: 0 2rem;
-    cursor: pointer;
     outline: 0;
   }
 
@@ -52,5 +52,9 @@
 
   span {
     padding-right: 2rem;
+  }
+
+  &:hover {
+    background-color: colorGreyBase;
   }
 }

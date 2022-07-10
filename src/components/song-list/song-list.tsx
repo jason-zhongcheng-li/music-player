@@ -1,31 +1,24 @@
 import { Image } from '../image/image';
-import { Song } from '../../models/song';
+import { Song, CurrentSong } from '../../models/song';
+import SoundWave from '../sound-wave/sound-wave';
 
 import styles from './song-list.module.scss';
-import SoundWave from '../sound-wave/sound-wave';
-import { useState, useEffect } from 'react';
 
 interface SongListProps {
   songs: Array<Song>;
   autoPlay: boolean;
   isPlaying: boolean;
-  currSongIndex: number;
+  currSong: CurrentSong;
   setPlayList: (songs: Array<Song>) => void;
   searchSongsByAlbum: (collectionId: number) => Promise<void>;
-  playMusic: (play: boolean, index?: number) => void;
+  playMusic: (play: boolean, song?: CurrentSong) => void;
 }
 
 const SongList = (props: SongListProps) => {
-  const { songs, searchSongsByAlbum, playMusic, autoPlay, isPlaying, currSongIndex, setPlayList } = props;
+  const { songs, searchSongsByAlbum, playMusic, autoPlay, isPlaying, currSong, setPlayList } = props;
 
-  const [showSoundWave, setShowSoundWave] = useState<boolean>(false);
-
-  useEffect(() => {
-    setShowSoundWave(false);
-  }, [songs]);
-
-  const isOnPlaying = (idx: number) => {
-    return currSongIndex === idx;
+  const isOnPlaying = (trackId: number) => {
+    return currSong?.trackId === trackId;
   };
 
   if (!songs) {
@@ -44,9 +37,8 @@ const SongList = (props: SongListProps) => {
             tabIndex={index}
             onClick={() => {
               if (autoPlay) {
-                playMusic(true, index);
+                playMusic(true, { trackId: song.trackId, index });
                 setPlayList(songs);
-                setShowSoundWave(true);
               } else {
                 searchSongsByAlbum(song.collectionId);
               }
@@ -61,9 +53,9 @@ const SongList = (props: SongListProps) => {
                   <div className={styles.collectionName}>{song.collectionCensoredName}</div>
                 </div>
               </div>
-              {autoPlay && showSoundWave && (
+              {autoPlay && (
                 <div className={styles.trackStatus}>
-                  {isOnPlaying(index) && (
+                  {isOnPlaying(song.trackId) && (
                     <SoundWave length={10} enabled={isPlaying} className={styles.trackStatusSoundWave} />
                   )}
                 </div>

@@ -1,8 +1,8 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, PropsWithChildren } from 'react';
 import { createSafeContext, useSafeContext } from '../helper/context-helpers';
 import { ApiService } from '../services/api';
 import { ApiServiceImpl } from '../services/impl/api-service-impl';
-import { Song } from '../models/song';
+import { Song, CurrentSong } from '../models/song';
 import { Collection } from '../models/collection';
 import useViewportSizes from 'use-viewport-sizes';
 import { Breakpoint } from '../helper/string-helper';
@@ -10,9 +10,9 @@ import { Breakpoint } from '../helper/string-helper';
 interface MusicProviderState {
   isPlaying: boolean;
   isLoading: boolean;
-  currSongIndex: number;
+  currSong: CurrentSong;
   isMobile: boolean;
-  playMusic: (play: boolean, index?: number) => void;
+  playMusic: (play: boolean, song?: CurrentSong) => void;
   playOrPause: () => void;
   skipSong: (skipTo: 'rewind' | 'forward') => void;
   setPlayList: (songs: Array<Song>) => void;
@@ -22,13 +22,13 @@ interface MusicProviderState {
 
 export const MusicContext = createSafeContext<MusicProviderState>();
 
-export const MusicProvider = (props) => {
+export const MusicProvider = (props: PropsWithChildren) => {
   const { children: childrenProps } = props;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [songs, setSongs] = useState<Array<Song>>(null);
-  const [currSongIndex, setCurrSongIndex] = useState<number>(-1);
+  const [currSong, setCurrSong] = useState<CurrentSong>(null);
   const [vpWith] = useViewportSizes({ dimension: 'w' });
   const apiService: ApiService = new ApiServiceImpl();
 
@@ -41,8 +41,8 @@ export const MusicProvider = (props) => {
   }, [vpWith]);
 
   const audio = useMemo(
-    () => (songs && songs[currSongIndex] ? new Audio(songs[currSongIndex]?.previewUrl) : null),
-    [currSongIndex]
+    () => (songs && currSong && songs[currSong?.index] ? new Audio(songs[currSong?.index]?.previewUrl) : null),
+    [currSong]
   );
 
   audio?.addEventListener('ended', () => {
@@ -75,7 +75,7 @@ export const MusicProvider = (props) => {
 
   const lookupSongsInAlbum = async (collectionId: number): Promise<Collection> => {
     setIsLoading(true);
-    setCurrSongIndex(-1);
+    setCurrSong(null);
     setIsPlaying(false);
     let collection = {} as Collection;
     const iTunesResponse = await apiService.lookUpSongsInAlbum(collectionId);
@@ -90,13 +90,14 @@ export const MusicProvider = (props) => {
     const maxIndex = songs.length - 1;
     const newIndex =
       skipTo === 'forward'
-        ? currSongIndex < maxIndex
-          ? currSongIndex + 1
-          : currSongIndex
-        : currSongIndex > 0
-        ? currSongIndex - 1
-        : currSongIndex;
-    setCurrSongIndex(newIndex);
+        ? currSong.index < maxIndex
+          ? currSong.index + 1
+          : currSong.index
+        : currSong.index > 0
+        ? currSong.index - 1
+        : currSong.index;
+
+    setCurrSong({ trackId: songs[newIndex].trackId, index: newIndex });
     if (!isPlaying) {
       setIsPlaying(true);
     }
@@ -106,11 +107,11 @@ export const MusicProvider = (props) => {
     setSongs(songs);
   };
 
-  const playMusic = (play: boolean, index?: number): void => {
-    if (currSongIndex < 0 && index === undefined) {
-      setCurrSongIndex(0);
-    } else if (index) {
-      setCurrSongIndex(index);
+  const playMusic = (play: boolean, song?: CurrentSong): void => {
+    if (!currSong && !song) {
+      setCurrSong({ trackId: songs[0].trackId, index: 0 });
+    } else if (song) {
+      setCurrSong(song);
     }
     setIsPlaying(play);
   };
@@ -126,14 +127,14 @@ export const MusicProvider = (props) => {
       playOrPause,
       skipSong,
       lookupSongsInAlbum,
-      currSongIndex,
+      currSong,
       setPlayList,
       searchSongs,
       playMusic,
       isMobile,
     }),
     // eslint-disable-next-line
-    [isPlaying, playMusic, currSongIndex, songs, isMobile]
+    [isPlaying, playMusic, currSong, songs, isMobile]
   );
 
   return <MusicContext.Provider value={values}>{childrenProps}</MusicContext.Provider>;

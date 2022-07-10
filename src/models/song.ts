@@ -9,3 +9,8 @@ export interface Song extends BaseITunesObj {
   trackTimeMillis: number;
 }
 
+export interface CurrentSong {
+  trackId: number;
+  index: number;
+}
+

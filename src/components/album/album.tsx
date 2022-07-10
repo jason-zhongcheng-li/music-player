@@ -8,17 +8,18 @@ import { Collection } from '../../models/collection';
 import Loading from '../loading/loading';
 
 import styles from './album.module.scss';
+import { CurrentSong } from '../../models/song';
 
 interface AlbumProps {
   collection: Collection;
   isPlaying: boolean;
-  currSongIndex: number;
-  playMusic: (play: boolean, index?: number) => void;
+  currSong: CurrentSong;
+  playMusic: (play: boolean, song?: CurrentSong) => void;
   isLoading?: boolean;
 }
 
 const Album = (props: AlbumProps) => {
-  const { collection, currSongIndex, isPlaying, isLoading, playMusic } = props;
+  const { collection, currSong, isPlaying, isLoading, playMusic } = props;
   const [artistViewUrl, setArtistViewUrl] = useState<string>();
   const [showSoundWave, setShowSoundWave] = useState<boolean>(false);
 
@@ -42,7 +43,7 @@ const Album = (props: AlbumProps) => {
   }, [isPlaying, showSoundWave]);
 
   const isOnPlaying = (idx: number) => {
-    return currSongIndex === idx;
+    return currSong?.index === idx;
   };
 
   return (
@@ -62,7 +63,15 @@ const Album = (props: AlbumProps) => {
             {collection?.songs
               ?.filter((song) => song.kind === 'song')
               .map((song, index) => (
-                <div className={styles.song} key={song.trackId}>
+                <div
+                  className={styles.song}
+                  key={song.trackId}
+                  role="button"
+                  tabIndex={index}
+                  onClick={() => {
+                    playMusic(true, { trackId: song.trackId, index });
+                  }}
+                >
                   <div className={styles.songName}>
                     <Svg name="music" />
                     <span>{song.trackCensoredName}</span>
