@@ -21,6 +21,12 @@ const Album = () => {
     return () => setArtistViewUrl(null);
   }, [collection, selectSong]);
 
+  useEffect(() => {
+    if (isPlaying && !showSoundWave) {
+      setShowSoundWave(true);
+    }
+  }, [isPlaying]);
+
   const isOnPlaying = (trackId: number) => {
     return soungSelected?.trackId === trackId && showSoundWave;
   };
