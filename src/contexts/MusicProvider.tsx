@@ -13,7 +13,7 @@ interface MusicProviderState {
   soungSelected: Song;
   playOrPause: () => void;
   selectSong: (trackId: number) => void;
-  lookupSongsInAlbum: (collectionId: number) => Promise<void>;
+  lookupSongsInAlbum: (song: Song, autoPlay: boolean) => Promise<void>;
   searchSongs: (searchValue: string) => Promise<void>;
 }
 
@@ -27,6 +27,13 @@ export const MusicProvider = (props) => {
   const [songs, setSongs] = useState<Array<Song>>(null);
   const [soungSelected, setSoungSelected] = useState<Song>(null);
   const apiService: ApiService = new ApiServiceImpl();
+
+  const resetPlayerStates = () => {
+    setIsLoading(true);
+    setIsPlaying(false);
+    setSoungSelected(null);
+    setCollection(null);
+  };
 
   const playOrPause = () => {
     setIsPlaying(!isPlaying);
@@ -47,12 +54,23 @@ export const MusicProvider = (props) => {
     setSongs(songs);
   };
 
-  const lookupSongsInAlbum = async (collectionId: number): Promise<void> => {
+  const lookupSongsInAlbum = async (song: Song, autoPlay: boolean): Promise<void> => {
     let collection = {} as Collection;
-    setIsLoading(true);
-    setIsPlaying(false);
-    setCollection(null);
-    const iTunesResponse = await apiService.lookUpSongsInAlbum(collectionId);
+    resetPlayerStates();
+
+    if (!song?.collectionId) {
+      setIsLoading(false);
+      return;
+    }
+
+    if (autoPlay) {
+      setSoungSelected(song);
+      setIsPlaying(true);
+      setIsLoading(false);
+      return;
+    }
+
+    const iTunesResponse = await apiService.lookUpSongsInAlbum(song.collectionId);
     if (iTunesResponse.kind === 'success') {
       collection = iTunesResponse.response;
     }

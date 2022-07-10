@@ -2,12 +2,8 @@
 @value colorBackground, colorBorder, colorShadow from '../../styles/colors.module.scss';
 
 .mediaPlayer {
-  border: 2px solid colorBorder;
-  border-radius: borderRadius;
   display: flex;
   flex-direction: column;
-  background-color: colorBackground;
-  box-shadow: 12px 12px 40px colorShadow;
 }
 
 .songList {
@@ -33,6 +29,10 @@
 
 @media (min-width: tablet) {
   .mediaPlayer {
+    border: 2px solid colorBorder;
+    border-radius: borderRadius;
+    background-color: colorBackground;
+    box-shadow: 12px 12px 40px colorShadow;
     margin: 3rem auto;
     height: 60vh;
     max-width: 80vw;

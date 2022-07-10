@@ -17,10 +17,10 @@ const MediaPlayer = () => {
     <div className={styles.mediaPlayer}>
       <div className={styles.songList}>
         <SearchBar searchSongs={searchSongs} />
-        <SongList lookupSongsInAlbum={lookupSongsInAlbum} songs={songs} />
+        <SongList lookupSongsInAlbum={lookupSongsInAlbum} songs={songs} autoPlay={vpWith <= Breakpoint.tablet} />
       </div>
       {vpWith >= Breakpoint.tablet ? (
-        <div className={styles.songList}>
+        <div className={styles.album}>
           <Album
             isLoading={isLoading}
             collection={collection}

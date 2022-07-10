@@ -1,4 +1,9 @@
 @value tablet from '../styles/metrics.module.scss';
+@value colorBackground from '../styles/colors.module.scss';
+
+body {
+  background-color: colorBackground;
+}
 
 .appContainer {
   position: relative;
@@ -6,11 +11,10 @@
   max-width: 100%;
 }
 
-.appContent {
-  min-height: calc(100vh - 4rem);
-}
-
 @media (min-width: tablet) {
+  body {
+    background-color: unset;
+  }
   .appContent {
     padding-top: 4rem;
   }

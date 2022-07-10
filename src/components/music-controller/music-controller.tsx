@@ -6,11 +6,10 @@ import classnames from 'classnames';
 import styles from './music-controller.module.scss';
 
 interface MusicControllerProps {
-  autoPlay?: boolean;
   className?: string;
 }
 
-const MusicController = ({ autoPlay, className }: MusicControllerProps) => {
+const MusicController = ({ className }: MusicControllerProps) => {
   const { isPlaying, playOrPause, soungSelected } = useITunes();
 
   const audio = useMemo(() => (soungSelected ? new Audio(soungSelected.previewUrl) : null), [soungSelected]);
@@ -27,12 +26,6 @@ const MusicController = ({ autoPlay, className }: MusicControllerProps) => {
       }
     };
   }, [isPlaying, audio]);
-
-  useEffect(() => {
-    if (autoPlay) {
-      playOrPause();
-    }
-  }, [autoPlay, playOrPause]);
 
   return (
     <div className={classnames(styles.controllers, className)}>

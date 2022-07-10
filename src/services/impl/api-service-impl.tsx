@@ -12,6 +12,7 @@ export class ApiServiceImpl implements ApiService {
     this.iTunesSearchInstance = fetcher.create(`${process.env.REACT_APP_ITUNES_API_SEARCH_URL}`, {
       headers: {
         'Content-Type': 'application/json',
+        'Set-Cookie': 'flavor=choco; SameSite=None; Secure',
         Accept: '*/*',
       },
     });
@@ -19,6 +20,7 @@ export class ApiServiceImpl implements ApiService {
     this.iTunesLookupInstance = fetcher.create(`${process.env.REACT_APP_ITUNES_API_LOOKUP_URL}`, {
       headers: {
         'Content-Type': 'application/json',
+        'Set-Cookie': 'flavor=choco; SameSite=None; Secure',
         Accept: '*/*',
       },
     });
