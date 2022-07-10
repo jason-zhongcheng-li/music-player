@@ -1,7 +1,10 @@
 @value colorBackground, colorBorder, colorBoxShadow from '../../styles/colors.module.scss';
+@value laptop, laptopLarge, borderRadius from '../../styles/metrics.module.scss';
 
 .wrapper {
   background-color: colorBackground;
+  border-top-right-radius: borderRadius;
+  border-bottom-right-radius: borderRadius;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

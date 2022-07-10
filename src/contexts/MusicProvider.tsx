@@ -31,7 +31,6 @@ export const MusicProvider = (props) => {
   };
 
   const selectSong = (trackId: number) => {
-    console.log('select song');
     const [soungSelected] = songs.filter((song) => song.trackId === trackId);
     setSoungSelected(soungSelected);
   };

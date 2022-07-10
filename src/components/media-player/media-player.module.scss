@@ -1,16 +1,20 @@
-@value laptop, laptopLarge from '../../styles/metrics.module.scss';
-@value colorBackground, colorBorder from '../../styles/colors.module.scss';
+@value laptop, laptopLarge, borderRadius from '../../styles/metrics.module.scss';
+@value colorBackground, colorBorder, colorShadow from '../../styles/colors.module.scss';
 
 .mediaPlayer {
   max-width: 90vw;
   margin: 3rem auto;
   border: 2px solid colorBorder;
   height: 60vh;
+  border-radius: borderRadius;
   display: flex;
   flex-direction: row;
+  box-shadow: 12px 12px 40px colorShadow;
 }
 
 .albumList {
+  border-top-left-radius: borderRadius;
+  border-bottom-left-radius: borderRadius;
   background-color: colorBackground;
   overflow-y: auto;
   width: 50%;
@@ -18,6 +22,8 @@
 
 .songList {
   position: relative;
+  border-top-right-radius: borderRadius;
+  border-bottom-right-radius: borderRadius;
   background-color: colorBackground;
   width: 100%;
 }
