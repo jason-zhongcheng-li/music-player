@@ -2,11 +2,12 @@ import { useState, useCallback } from 'react';
 import classnames from 'classnames';
 import { debounce } from 'lodash';
 import { Svg } from '../svg/svg';
+import { Song } from '../../models/song';
 
 import styles from './search-bar.module.scss';
 
 export interface SearchBarProps {
-  searchSongs: (searchValue: string) => Promise<void>;
+  searchSongs: (term: string) => Promise<void>;
 }
 
 const SearchBar = (props: SearchBarProps) => {

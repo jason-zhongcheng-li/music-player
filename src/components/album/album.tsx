@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Image } from '../image/image';
-
 import { Svg } from '../svg/svg';
 import SoundWave from '../sound-wave/sound-wave';
 import MusicController from '../music-controller/music-controller';
 import { converToMin } from '../../helper/string-helper';
 import { Collection } from '../../models/collection';
-import { Song } from '../../models/song';
+import Loading from '../loading/loading';
 
 import styles from './album.module.scss';
-import Loading from '../loading/loading';
 
 interface AlbumProps {
   collection: Collection;
-  selectSong: (trackId: number) => void;
-  soungSelected: Song;
   isPlaying: boolean;
+  currSongIndex: number;
+  selectMusic: (index: number, autoPlay?: boolean) => void;
   isLoading?: boolean;
 }
 
 const Album = (props: AlbumProps) => {
-  const { collection, selectSong, isPlaying, soungSelected, isLoading } = props;
+  const { collection, selectMusic, currSongIndex, isPlaying, isLoading } = props;
   const [artistViewUrl, setArtistViewUrl] = useState<string>();
   const [showSoundWave, setShowSoundWave] = useState<boolean>(false);
 
@@ -35,10 +33,10 @@ const Album = (props: AlbumProps) => {
     }
     if (Array.isArray(collection?.songs)) {
       // select 1st song as default audio
-      selectSong(collection.songs[0]?.trackId);
+      selectMusic(0);
     }
     return () => resetPageState();
-  }, [collection, selectSong]);
+  }, [collection]);
 
   useEffect(() => {
     if (isPlaying && !showSoundWave) {
@@ -46,8 +44,8 @@ const Album = (props: AlbumProps) => {
     }
   }, [isPlaying, showSoundWave]);
 
-  const isOnPlaying = (trackId: number) => {
-    return soungSelected?.trackId === trackId && showSoundWave;
+  const isOnPlaying = (idx: number) => {
+    return currSongIndex === idx;
   };
 
   return (
@@ -66,13 +64,13 @@ const Album = (props: AlbumProps) => {
           <div className={styles.songlist}>
             {collection?.songs
               ?.filter((song) => song.kind === 'song')
-              .map((song) => (
+              .map((song, index) => (
                 <div className={styles.song} key={song.trackId}>
                   <div className={styles.songName}>
                     <Svg name="music" />
                     <span>{song.trackCensoredName}</span>
                   </div>
-                  {isOnPlaying(song.trackId) && <SoundWave length={10} enabled={isPlaying} />}
+                  {isOnPlaying(index) && <SoundWave length={10} enabled={isPlaying} />}
                   <div className={styles.songInfo}>
                     <span>{converToMin(song.trackTimeMillis)}</span>
                   </div>

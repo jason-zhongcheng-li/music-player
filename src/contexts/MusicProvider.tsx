@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { createSafeContext, useSafeContext } from '../helper/context-helpers';
 import { ApiService } from '../services/api';
 import { ApiServiceImpl } from '../services/impl/api-service-impl';
@@ -8,13 +8,14 @@ import { Collection } from '../models/collection';
 interface MusicProviderState {
   isPlaying: boolean;
   isLoading: boolean;
-  collection: Collection;
-  songs: Array<Song>;
-  soungSelected: Song;
+  currSongIndex: number;
+  selectSong: (idx: number) => void;
+  playMusic: (autoPlay: boolean) => void;
   playOrPause: () => void;
-  selectSong: (trackId: number) => void;
-  lookupSongsInAlbum: (song: Song, autoPlay: boolean) => Promise<void>;
-  searchSongs: (searchValue: string) => Promise<void>;
+  skipSong: (skipTo: 'rewind' | 'forward') => void;
+  setPlayList: (songs: Array<Song>) => void;
+  lookupSongsInAlbum: (collectionId: number) => Promise<Collection>;
+  searchSongs: (searchValue: string) => Promise<Array<Song>>;
 }
 
 export const MusicContext = createSafeContext<MusicProviderState>();
@@ -23,59 +24,73 @@ export const MusicProvider = (props) => {
   const { children: childrenProps } = props;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [collection, setCollection] = useState<Collection>(null);
   const [songs, setSongs] = useState<Array<Song>>(null);
-  const [soungSelected, setSoungSelected] = useState<Song>(null);
+  const [currSongIndex, setCurrSongIndex] = useState<number>(-1);
   const apiService: ApiService = new ApiServiceImpl();
 
-  const resetPlayerStates = () => {
-    setIsLoading(true);
-    setIsPlaying(false);
-    setSoungSelected(null);
-    setCollection(null);
-  };
+  const audio = useMemo(
+    () => (songs && songs[currSongIndex] ? new Audio(songs[currSongIndex]?.previewUrl) : null),
+    [currSongIndex, songs]
+  );
 
   const playOrPause = () => {
     setIsPlaying(!isPlaying);
   };
 
-  const selectSong = (trackId: number) => {
-    const [soungSelected] = songs.filter((song) => song.trackId === trackId);
-    setSoungSelected(soungSelected);
-  };
+  useEffect(() => {
+    if (!audio) {
+      return;
+    } else if (isPlaying) {
+      audio.play();
+    }
+    return () => {
+      if (audio && isPlaying) {
+        audio.pause();
+      }
+    };
+  }, [isPlaying, audio]);
 
-  const searchSongs = async (searchValue: string): Promise<void> => {
+  const searchSongs = async (searchValue: string): Promise<Array<Song>> => {
     const encodedValue = encodeURI(searchValue);
     let songs = [] as Array<Song>;
     const iTunesResponse = await apiService.searchSongs(encodedValue);
     if (iTunesResponse.kind === 'success') {
       songs = iTunesResponse.response;
     }
-    setSongs(songs);
+    return songs;
   };
 
-  const lookupSongsInAlbum = async (song: Song, autoPlay: boolean): Promise<void> => {
+  const lookupSongsInAlbum = async (collectionId: number): Promise<Collection> => {
+    setIsLoading(true);
     let collection = {} as Collection;
-    resetPlayerStates();
-
-    if (!song?.collectionId) {
-      setIsLoading(false);
-      return;
-    }
-
-    if (autoPlay) {
-      setSoungSelected(song);
-      setIsPlaying(true);
-      setIsLoading(false);
-      return;
-    }
-
-    const iTunesResponse = await apiService.lookUpSongsInAlbum(song.collectionId);
+    const iTunesResponse = await apiService.lookUpSongsInAlbum(collectionId);
     if (iTunesResponse.kind === 'success') {
       collection = iTunesResponse.response;
     }
     setIsLoading(false);
-    setCollection(collection);
+    return collection;
+  };
+
+  const skipSong = (skipTo: 'rewind' | 'forward') => {
+    const newIndex =
+      currSongIndex > 0 && currSongIndex < songs.length - 1
+        ? skipTo === 'forward'
+          ? currSongIndex + 1
+          : currSongIndex - 1
+        : currSongIndex;
+    setCurrSongIndex(newIndex);
+  };
+
+  const setPlayList = (songs: Array<Song>) => {
+    setSongs(songs);
+  };
+
+  const selectSong = (idx: number): void => {
+    setCurrSongIndex(idx);
+  };
+
+  const playMusic = (autoPlay: boolean): void => {
+    setIsPlaying(autoPlay);
   };
 
   const values = useMemo(
@@ -83,15 +98,16 @@ export const MusicProvider = (props) => {
       isPlaying,
       isLoading,
       playOrPause,
-      songs,
-      soungSelected,
-      collection,
-      selectSong,
+      skipSong,
       lookupSongsInAlbum,
+      currSongIndex,
+      setPlayList,
+      selectSong,
       searchSongs,
+      playMusic,
     }),
     // eslint-disable-next-line
-    [isPlaying, songs, soungSelected, collection]
+    [isPlaying, currSongIndex, songs]
   );
 
   return <MusicContext.Provider value={values}>{childrenProps}</MusicContext.Provider>;
