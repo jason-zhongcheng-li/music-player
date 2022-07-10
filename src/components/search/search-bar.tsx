@@ -2,15 +2,16 @@ import { useState, useCallback } from 'react';
 import classnames from 'classnames';
 import { debounce } from 'lodash';
 import { Svg } from '../svg/svg';
-import { useITunes } from '../../contexts/MusicProvider';
 
 import styles from './search-bar.module.scss';
 
-export interface SearchBarProps {}
+export interface SearchBarProps {
+  searchSongs: (searchValue: string) => Promise<void>;
+}
 
-const SearchBar = () => {
+const SearchBar = (props: SearchBarProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(null);
-  const { searchSongs } = useITunes();
+  const { searchSongs } = props;
 
   const [currentValue, setCurrentValue] = useState<string>();
 

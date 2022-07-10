@@ -7,6 +7,7 @@ import { Collection } from '../models/collection';
 
 interface MusicProviderState {
   isPlaying: boolean;
+  isLoading: boolean;
   collection: Collection;
   songs: Array<Song>;
   soungSelected: Song;
@@ -21,6 +22,7 @@ export const MusicContext = createSafeContext<MusicProviderState>();
 export const MusicProvider = (props) => {
   const { children: childrenProps } = props;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [collection, setCollection] = useState<Collection>(null);
   const [songs, setSongs] = useState<Array<Song>>(null);
   const [soungSelected, setSoungSelected] = useState<Song>(null);
@@ -47,17 +49,29 @@ export const MusicProvider = (props) => {
 
   const lookupSongsInAlbum = async (collectionId: number): Promise<void> => {
     let collection = {} as Collection;
+    setIsLoading(true);
     setIsPlaying(false);
     setCollection(null);
     const iTunesResponse = await apiService.lookUpSongsInAlbum(collectionId);
     if (iTunesResponse.kind === 'success') {
       collection = iTunesResponse.response;
     }
+    setIsLoading(false);
     setCollection(collection);
   };
 
   const values = useMemo(
-    () => ({ isPlaying, playOrPause, songs, soungSelected, collection, selectSong, lookupSongsInAlbum, searchSongs }),
+    () => ({
+      isPlaying,
+      isLoading,
+      playOrPause,
+      songs,
+      soungSelected,
+      collection,
+      selectSong,
+      lookupSongsInAlbum,
+      searchSongs,
+    }),
     // eslint-disable-next-line
     [isPlaying, songs, soungSelected, collection]
   );

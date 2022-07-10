@@ -1,11 +1,15 @@
 import { Image } from '../image/image';
 import { Song } from '../../models/song';
-import { useITunes } from '../../contexts/MusicProvider';
 
 import styles from './song-list.module.scss';
 
-const SongList = () => {
-  const { songs, lookupSongsInAlbum } = useITunes();
+interface SongListProps {
+  songs: Array<Song>;
+  lookupSongsInAlbum: (collectionId: number) => Promise<void>;
+}
+
+const SongList = (props: SongListProps) => {
+  const { songs, lookupSongsInAlbum } = props;
   const getSongsInAlbum = async (collectionId: number) => {
     await lookupSongsInAlbum(collectionId);
   };

@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Image } from '../image/image';
+import logo from '../../assets/logo.svg';
 import { Svg } from '../svg/svg';
-import { useITunes } from '../../contexts/MusicProvider';
 import SoundWave from '../sound-wave/sound-wave';
 import MusicController from '../music-controller/music-controller';
 import { converToMin } from '../../helper/string-helper';
+import { Collection } from '../../models/collection';
+import { Song } from '../../models/song';
 
 import styles from './album.module.scss';
 
-const Album = () => {
-  const { collection, selectSong, isPlaying, soungSelected } = useITunes();
+interface AlbumProps {
+  collection: Collection;
+  selectSong: (trackId: number) => void;
+  soungSelected: Song;
+  isPlaying: boolean;
+  isLoading?: boolean;
+}
+
+const Album = (props: AlbumProps) => {
+  const { collection, selectSong, isPlaying, soungSelected, isLoading } = props;
   const [artistViewUrl, setArtistViewUrl] = useState<string>();
   const [showSoundWave, setShowSoundWave] = useState<boolean>(false);
 
@@ -41,30 +51,36 @@ const Album = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.albumArt}>
-        {artistViewUrl && (
-          <>
-            <Image image={{ url: artistViewUrl }} className={styles.albumArtImage} />
-            <MusicController />
-          </>
-        )}
-      </div>
-      <div className={styles.songlist}>
-        {collection?.songs
-          ?.filter((song) => song.kind === 'song')
-          .map((song) => (
-            <div className={styles.song} key={song.trackId}>
-              <div className={styles.songName}>
-                <Svg name="music" />
-                <span>{song.trackCensoredName}</span>
-              </div>
-              {isOnPlaying(song.trackId) && <SoundWave length={10} enabled={isPlaying} />}
-              <div className={styles.songInfo}>
-                <span>{converToMin(song.trackTimeMillis)}</span>
-              </div>
-            </div>
-          ))}
-      </div>
+      {isLoading ? (
+        <img src={logo} className="App-logo" alt="logo" />
+      ) : (
+        <>
+          <div className={styles.albumArt}>
+            {artistViewUrl && (
+              <>
+                <Image image={{ url: artistViewUrl }} className={styles.albumArtImage} />
+                <MusicController />
+              </>
+            )}
+          </div>
+          <div className={styles.songlist}>
+            {collection?.songs
+              ?.filter((song) => song.kind === 'song')
+              .map((song) => (
+                <div className={styles.song} key={song.trackId}>
+                  <div className={styles.songName}>
+                    <Svg name="music" />
+                    <span>{song.trackCensoredName}</span>
+                  </div>
+                  {isOnPlaying(song.trackId) && <SoundWave length={10} enabled={isPlaying} />}
+                  <div className={styles.songInfo}>
+                    <span>{converToMin(song.trackTimeMillis)}</span>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
