@@ -13,8 +13,7 @@
     height: 2.5rem;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 6px;
-    padding-left: 2.5rem;
-    width: 80%;
+    width: 90%;
     color: colorGreyDark;
     outline: none;
     border: 2px solid transparent;
@@ -26,7 +25,7 @@
 .loading {
   position: absolute;
   top: 1.9rem;
-  left: 2.25rem;
+  right: 2.25rem;
   font-size: 1.5rem;
   color: colorDark;
 }
@@ -46,5 +45,13 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media (min-width: tablet) {
+  .searchBar {
+    &Input {
+      width: 80%;
+    }
   }
 }

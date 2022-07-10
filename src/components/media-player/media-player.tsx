@@ -30,7 +30,7 @@ const MediaPlayer = () => {
           />
         </div>
       ) : (
-        <MusicController />
+        <MusicController className={styles.controller} />
       )}
     </div>
   );

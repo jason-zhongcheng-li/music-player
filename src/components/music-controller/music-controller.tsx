@@ -1,6 +1,7 @@
 import { useMemo, useEffect } from 'react';
 import { Svg } from '../svg/svg';
 import { useITunes } from '../../contexts/MusicProvider';
+import classnames from 'classnames';
 
 import styles from './music-controller.module.scss';
 
@@ -9,7 +10,7 @@ interface MusicControllerProps {
   className?: string;
 }
 
-const MusicController = ({ autoPlay }: MusicControllerProps) => {
+const MusicController = ({ autoPlay, className }: MusicControllerProps) => {
   const { isPlaying, playOrPause, soungSelected } = useITunes();
 
   const audio = useMemo(() => (soungSelected ? new Audio(soungSelected.previewUrl) : null), [soungSelected]);
@@ -34,7 +35,7 @@ const MusicController = ({ autoPlay }: MusicControllerProps) => {
   }, [autoPlay, playOrPause]);
 
   return (
-    <div className={styles.controllers}>
+    <div className={classnames(styles.controllers, className)}>
       <Svg name="rewind" />
       <Svg name={isPlaying ? 'pause' : 'play'} onClick={() => playOrPause()} />
       <Svg name="forward" />

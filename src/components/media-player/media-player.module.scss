@@ -1,14 +1,12 @@
-@value laptop, laptopLarge, borderRadius from '../../styles/metrics.module.scss';
+@value tablet, laptop, laptopLarge, borderRadius from '../../styles/metrics.module.scss';
 @value colorBackground, colorBorder, colorShadow from '../../styles/colors.module.scss';
 
 .mediaPlayer {
-  max-width: 90vw;
-  margin: 3rem auto;
   border: 2px solid colorBorder;
-  height: 60vh;
   border-radius: borderRadius;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  background-color: colorBackground;
   box-shadow: 12px 12px 40px colorShadow;
 }
 
@@ -17,7 +15,7 @@
   border-bottom-left-radius: borderRadius;
   background-color: colorBackground;
   overflow-y: auto;
-  width: 50%;
+  width: 100%;
 }
 
 .album {
@@ -28,14 +26,20 @@
   width: 100%;
 }
 
-@media (min-width: laptop) {
-  .mediaPlayer {
-    max-width: 80vw;
-  }
+.controller {
+  position: fixed;
+  bottom: 0;
 }
 
-@media (min-width: laptopLarge) {
+@media (min-width: tablet) {
   .mediaPlayer {
-    max-width: 60vw;
+    margin: 3rem auto;
+    height: 60vh;
+    max-width: 80vw;
+    flex-direction: row;
+  }
+
+  .songList {
+    width: 50%;
   }
 }
