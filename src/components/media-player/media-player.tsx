@@ -4,18 +4,30 @@ import Album from '../album/album';
 import { useITunes } from '../../contexts/MusicProvider';
 import MusicController from '../music-controller/music-controller';
 import Drawer from '../drawer/drawer';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { Song } from '../../models/song';
 import { Collection } from '../../models/collection';
+import useViewportSizes from 'use-viewport-sizes';
+import { Breakpoint } from '../../helper/string-helper';
 
 import styles from './media-player.module.scss';
 
 const MediaPlayer = () => {
-  const { searchSongs, isLoading, setPlayList, isPlaying, lookupSongsInAlbum, currSong, playMusic, isMobile } =
+  const { searchSongs, isLoading, setPlayList, isPlaying, lookupSongsInAlbum, currSong, playMusic, playedSongs } =
     useITunes();
   const [showController, setShowController] = useState<boolean>(false);
   const [searchResult, setSearchResult] = useState<Array<Song>>(null);
   const [collection, setCollection] = useState<Collection>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [vpWith] = useViewportSizes({ dimension: 'w' });
+
+  useLayoutEffect(() => {
+    if (vpWith < Breakpoint.tablet) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [vpWith]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -47,6 +59,7 @@ const MediaPlayer = () => {
           currSong={currSong}
           setPlayList={setPlayList}
           autoPlay={isMobile}
+          playedSongs={playedSongs}
         />
       </div>
       {!isMobile ? (
@@ -57,6 +70,7 @@ const MediaPlayer = () => {
             currSong={currSong}
             collection={collection}
             isPlaying={isPlaying}
+            playedSongs={playedSongs}
           />
         </div>
       ) : (

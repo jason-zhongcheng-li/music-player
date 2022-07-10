@@ -6,20 +6,21 @@ import MusicController from '../music-controller/music-controller';
 import { converToMin } from '../../helper/string-helper';
 import { Collection } from '../../models/collection';
 import Loading from '../loading/loading';
+import { CurrentSong } from '../../models/song';
 
 import styles from './album.module.scss';
-import { CurrentSong } from '../../models/song';
 
 interface AlbumProps {
   collection: Collection;
   isPlaying: boolean;
   currSong: CurrentSong;
+  playedSongs: Array<CurrentSong>;
   playMusic: (play: boolean, song?: CurrentSong) => void;
   isLoading?: boolean;
 }
 
 const Album = (props: AlbumProps) => {
-  const { collection, currSong, isPlaying, isLoading, playMusic } = props;
+  const { collection, currSong, isPlaying, isLoading, playMusic, playedSongs } = props;
   const [artistViewUrl, setArtistViewUrl] = useState<string>();
   const [showSoundWave, setShowSoundWave] = useState<boolean>(false);
 
@@ -44,6 +45,10 @@ const Album = (props: AlbumProps) => {
 
   const isOnPlaying = (idx: number) => {
     return currSong?.index === idx;
+  };
+
+  const isPlayed = (trackId: number, index: number) => {
+    return !!playedSongs.find((song) => song.index === index && song.trackId === trackId);
   };
 
   return (
@@ -75,6 +80,7 @@ const Album = (props: AlbumProps) => {
                   <div className={styles.songName}>
                     <Svg name="music" />
                     <span>{song.trackCensoredName}</span>
+                    {isPlayed(song.trackId, index) && <span className={styles.songPlayed}>played</span>}
                   </div>
                   <div className={styles.songInfo}>
                     {isOnPlaying(index) && <SoundWave length={10} enabled={isPlaying} />}

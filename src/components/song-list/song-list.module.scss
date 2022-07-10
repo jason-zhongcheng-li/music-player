@@ -1,4 +1,4 @@
-@value colorBackground, colorBorder, colorBoxShadow from '../../styles/colors.module.scss';
+@value colorBackground, colorBorder, colorBoxShadow, colorSuccessDark from '../../styles/colors.module.scss';
 
 .wrapper {
   background-color: colorBackground;
@@ -63,5 +63,9 @@
   &Status {
     position: relative;
     margin: auto 0;
+  }
+
+  &Played {
+    color: colorSuccessDark;
   }
 }

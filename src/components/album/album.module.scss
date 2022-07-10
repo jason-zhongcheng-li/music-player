@@ -1,4 +1,4 @@
-@value colorBackground, colorBorder, colorBoxShadow, colorGreyBase from '../../styles/colors.module.scss';
+@value colorBackground, colorBorder, colorBoxShadow, colorGreyBase, colorSuccessDark from '../../styles/colors.module.scss';
 @value laptop, laptopLarge, borderRadius from '../../styles/metrics.module.scss';
 
 .wrapper {
@@ -48,6 +48,10 @@
   &Info {
     display: flex;
     flex-direction: row;
+  }
+
+  &Played {
+    color: colorSuccessDark;
   }
 
   span {

@@ -1,8 +1,8 @@
 import { AllHTMLAttributes, PropsWithChildren, useRef, useEffect } from 'react';
 import classnames from 'classnames';
+import Portal from '../portal/portal';
 
 import styles from './drawer.module.scss';
-import Portal from '../portal/portal';
 
 type DrawerOpenDirection = 'top' | 'bottom';
 

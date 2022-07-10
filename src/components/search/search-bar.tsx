@@ -23,7 +23,7 @@ const SearchBar = (props: SearchBarProps) => {
       }
       await searchSongs(value);
       setIsLoading(false);
-    }, 500),
+    }, 600),
     []
   );
 

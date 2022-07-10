@@ -1,7 +1,6 @@
 # BCGDV Music Player
 
 ![](https://img.shields.io/node/v/mocha)
-![code size](https://img.shields.io/github/languages/code-size/zhongchengli/trendmicro-aws-s3kms-sdk)
 
 ## Description
 
@@ -23,7 +22,7 @@ start to play the preview for that song. The media player may be something as si
 3. [X] The media player should only show once a song is clicked and should stay on the screen from that point onwards and should be reused for any subsequent song played.
 4. [X] When a song is being played, you must provide some indicator in the list item that the song is being played.
 5. [X] You can stop playback if a new search is performed, however the preference is for the song to keep playing.
-6. [X] If you stop playback when a new search is performed, you must hide the media player till a song is selected.
+6. [ ] If you stop playback when a new search is performed, you must hide the media player till a song is selected.
 7. [X] You can take liberties with the UI, however the major elements as shown in the picture or mentioned above should still be present.
 
 ### Desktop View
@@ -77,9 +76,9 @@ Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Supported Browsers
-[X] Chrome
-[X] Firefox
-[X] Safari
+1. [X] Chrome
+2. [X] Firefox
+3. [X] Safari
 
 
 <br>

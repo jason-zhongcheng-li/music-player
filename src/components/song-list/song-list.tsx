@@ -9,16 +9,21 @@ interface SongListProps {
   autoPlay: boolean;
   isPlaying: boolean;
   currSong: CurrentSong;
+  playedSongs: Array<CurrentSong>;
   setPlayList: (songs: Array<Song>) => void;
   searchSongsByAlbum: (collectionId: number) => Promise<void>;
   playMusic: (play: boolean, song?: CurrentSong) => void;
 }
 
 const SongList = (props: SongListProps) => {
-  const { songs, searchSongsByAlbum, playMusic, autoPlay, isPlaying, currSong, setPlayList } = props;
+  const { songs, searchSongsByAlbum, playMusic, autoPlay, isPlaying, currSong, setPlayList, playedSongs } = props;
 
   const isOnPlaying = (trackId: number) => {
     return currSong?.trackId === trackId;
+  };
+
+  const isPlayed = (trackId: number, index: number) => {
+    return !!playedSongs.find((song) => song.index === index && song.trackId === trackId);
   };
 
   if (!songs) {
@@ -51,6 +56,7 @@ const SongList = (props: SongListProps) => {
                   <div className={styles.trackName}>{song.trackCensoredName}</div>
                   <div className={styles.artistName}>{song.artistName}</div>
                   <div className={styles.collectionName}>{song.collectionCensoredName}</div>
+                  {isPlayed(song.trackId, index) && <span className={styles.trackPlayed}>played</span>}
                 </div>
               </div>
               {autoPlay && (
