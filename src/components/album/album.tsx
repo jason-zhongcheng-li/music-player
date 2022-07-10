@@ -4,6 +4,7 @@ import { Svg } from '../svg/svg';
 import { useITunes } from '../../contexts/MusicProvider';
 import SoundWave from '../sound-wave/sound-wave';
 import MusicController from '../music-controller/music-controller';
+import { converToMin } from '../../helper/string-helper';
 
 import styles from './album.module.scss';
 
@@ -53,6 +54,9 @@ const Album = () => {
                 <span>{song.trackCensoredName}</span>
               </div>
               {isOnPlaying(song.trackId) && <SoundWave length={10} enabled={isPlaying} />}
+              <div className={styles.songInfo}>
+                <span>{converToMin(song.trackTimeMillis)}</span>
+              </div>
             </div>
           ))}
       </div>
