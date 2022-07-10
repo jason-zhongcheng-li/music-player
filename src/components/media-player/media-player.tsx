@@ -7,6 +7,7 @@ import { Breakpoint } from '../../helper/string-helper';
 import MusicController from '../music-controller/music-controller';
 
 import styles from './media-player.module.scss';
+import Drawer from '../drawer/drawer';
 
 const MediaPlayer = () => {
   const { searchSongs, isLoading, collection, selectSong, songs, isPlaying, soungSelected, lookupSongsInAlbum } =
@@ -30,7 +31,9 @@ const MediaPlayer = () => {
           />
         </div>
       ) : (
-        <MusicController className={styles.controller} />
+        <Drawer isOpen={isPlaying} openFrom="bottom" fullwidthMobile>
+          <MusicController className={(styles.controller, isPlaying && styles.isPlaying)} />
+        </Drawer>
       )}
     </div>
   );
