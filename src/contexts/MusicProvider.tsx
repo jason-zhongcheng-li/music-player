@@ -42,7 +42,7 @@ export const MusicProvider = (props) => {
 
   const audio = useMemo(
     () => (songs && songs[currSongIndex] ? new Audio(songs[currSongIndex]?.previewUrl) : null),
-    [currSongIndex, songs]
+    [currSongIndex]
   );
 
   audio?.addEventListener('ended', () => {

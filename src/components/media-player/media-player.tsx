@@ -2,8 +2,6 @@ import SearchBar from '../search/search-bar';
 import SongList from '../song-list/song-list';
 import Album from '../album/album';
 import { useITunes } from '../../contexts/MusicProvider';
-import useViewportSizes from 'use-viewport-sizes';
-import { Breakpoint } from '../../helper/string-helper';
 import MusicController from '../music-controller/music-controller';
 import Drawer from '../drawer/drawer';
 import { useState, useEffect } from 'react';
@@ -18,6 +16,7 @@ const MediaPlayer = () => {
   const [showController, setShowController] = useState<boolean>(false);
   const [searchResult, setSearchResult] = useState<Array<Song>>(null);
   const [collection, setCollection] = useState<Collection>(null);
+
   useEffect(() => {
     if (isPlaying) {
       setShowController(true);
@@ -46,6 +45,7 @@ const MediaPlayer = () => {
           songs={searchResult}
           isPlaying={isPlaying}
           currSongIndex={currSongIndex}
+          setPlayList={setPlayList}
           autoPlay={isMobile}
         />
       </div>

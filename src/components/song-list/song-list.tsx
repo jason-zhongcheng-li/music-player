@@ -3,18 +3,27 @@ import { Song } from '../../models/song';
 
 import styles from './song-list.module.scss';
 import SoundWave from '../sound-wave/sound-wave';
+import { useState, useEffect } from 'react';
 
 interface SongListProps {
   songs: Array<Song>;
   autoPlay: boolean;
   isPlaying: boolean;
   currSongIndex: number;
+  setPlayList: (songs: Array<Song>) => void;
   searchSongsByAlbum: (collectionId: number) => Promise<void>;
   playMusic: (play: boolean, index?: number) => void;
 }
 
 const SongList = (props: SongListProps) => {
-  const { songs, searchSongsByAlbum, playMusic, autoPlay, isPlaying, currSongIndex } = props;
+  const { songs, searchSongsByAlbum, playMusic, autoPlay, isPlaying, currSongIndex, setPlayList } = props;
+
+  const [showSoundWave, setShowSoundWave] = useState<boolean>(false);
+
+  useEffect(() => {
+    setShowSoundWave(false);
+  }, [songs]);
+
   const isOnPlaying = (idx: number) => {
     return currSongIndex === idx;
   };
@@ -36,6 +45,8 @@ const SongList = (props: SongListProps) => {
             onClick={() => {
               if (autoPlay) {
                 playMusic(true, index);
+                setPlayList(songs);
+                setShowSoundWave(true);
               } else {
                 searchSongsByAlbum(song.collectionId);
               }
@@ -50,7 +61,7 @@ const SongList = (props: SongListProps) => {
                   <div className={styles.collectionName}>{song.collectionCensoredName}</div>
                 </div>
               </div>
-              {autoPlay && (
+              {autoPlay && showSoundWave && (
                 <div className={styles.trackStatus}>
                   {isOnPlaying(index) && (
                     <SoundWave length={10} enabled={isPlaying} className={styles.trackStatusSoundWave} />
