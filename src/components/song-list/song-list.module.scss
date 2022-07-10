@@ -1,0 +1,47 @@
+@value colorBackground, colorBorder, colorBoxShadow from '../../styles/colors.module.scss';
+
+.wrapper {
+  background-color: colorBackground;
+  padding: 0.5rem;
+  border-radius: 6px;
+
+  .track:not(:last-child) {
+    border-bottom: 2px solid colorBorder;
+  }
+}
+
+.track {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem;
+
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 5px 2px 10px colorBoxShadow;
+    border-radius: 6px;
+  }
+
+  &Info {
+    position: relative;
+    max-width: max-content;
+    overflow: hidden;
+    text-align: left;
+    padding: 0.5rem;
+
+    .trackName {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .artistName {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .collectionName {
+      font-size: 10px;
+      font-weight: 400;
+    }
+  }
+}
