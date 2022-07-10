@@ -1,49 +1,100 @@
-# music-player
+# BCGDV Music Player
+
+![](https://img.shields.io/node/v/mocha)
+![code size](https://img.shields.io/github/languages/code-size/zhongchengli/trendmicro-aws-s3kms-sdk)
+
+## Description
+
+In this round of BCGDV’s hiring process. BCGDV would like to assess candidates' technical skills with an exercise that should take a few hours.
 
 
-# Getting Started with Create React App
+## Front end Project
 
+Typescript + React
+
+## Requirements
+Use the iTunes affiliate API to develop a simple music player that lets you search by artist and displays the search results on screen. When a song is selected from the list, the song will start to play.
+
+### Mobile View
+
+1. [X] Each song’s title, artist, album and album art should be displayed.
+2. [X] When we tap a song, a media player should show up at the bottom of the screen and
+start to play the preview for that song. The media player may be something as simple as a toggling play or pause button, however, it should pop-up at the bottom of the screen and on top of the list as shown. All the other controls shown are optional.
+3. [X] The media player should only show once a song is clicked and should stay on the screen from that point onwards and should be reused for any subsequent song played.
+4. [X] When a song is being played, you must provide some indicator in the list item that the song is being played.
+5. [X] You can stop playback if a new search is performed, however the preference is for the song to keep playing.
+6. [X] If you stop playback when a new search is performed, you must hide the media player till a song is selected.
+7. [X] You can take liberties with the UI, however the major elements as shown in the picture or mentioned above should still be present.
+
+### Desktop View
+
+1. [X] Each song’s title, artist, album and album art should be displayed.
+2. [X] When a song is selected on desktop, the screen should split and on the right hand side
+we should see the album art (large image) and music controls.
+3. [X] The selected song’s preview should not play automatically, it should simply display the
+details and let to user play the song preview if they wish.
+4. [X] Below the music controls, all the songs in the album should be listed. These only need to
+be listed and don’t have to be playable.
+5. [X] The music control only needs to have play and pause however the music should keep playing even if a different song is selected on the left hand side.
+6. [X] If a song is playing and a different song is selected from the left hand side, the song should keep playing, however the right hand side should display details for the song selected.
+7. [X] There should be some visual indication on the song playing.
+8. [X] Below is an example of what the screen should look like. You can take liberties with the
+UI, however all the major components shown should be present on the screen.
+9. [X] You can stop playback if a new search is performed, however the preference is for the
+song to keep playing.
+10. [X] If you stop playback when a new search is performed, you must hide the media player till
+a song is selected.
+
+## Installation
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Use the package manager [npm](https://www.npmjs.com/) to install the dependencies in the project.
 
+```bash
+npm install
+```
+
+## Configuration
+
+Some of the functions in this project need to talk to iTunes API via REST
+
+1. Create a *.env* file at the root directory of the application and add the variables to it.
+2. Variables
+
+```
+REACT_APP_ITUNES_API_SEARCH_URL=https://itunes.apple.com/search?
+REACT_APP_ITUNES_API_LOOKUP_URL=https://itunes.apple.com/lookup?
+```
+
+>Note: No space and No punctuation
+
+## Run
 In the project directory, you can run:
-
-### `npm start`
-
+```bash
+npm start
+```
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Supported Browsers
+[X] Chrome
+[X] Firefox
+[X] Safari
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br>
+<br>
 
-### `npm run build`
+# Author
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+* Jason Li - [LinkedIn](https://www.linkedin.com/in/jason-li-5a943a135/)<br>
+* Full stack Developer (Typecript, ReactJS, Node, NextJS, Express, GraphQL)*
+<br>
+<br>
+Thanks for your time to review my code. I expect you are able to understand the design of the project and functions that I have implemented in this application.
+There is only one line of the code that has not been covered in unit test. You can find it in coverage report. I would like to discuss further about the solution if it's possible. <br>
+<br>
+As an candidate doing this code challenge, I have been enjoying hands-on coding, issue investigation, knowledge deep diving and problem solving in this project.
+<br>
+<br>
+I expect this project has exposed my tech stack and skill set to your development and recruitment teams in terms of my job application at BCGDV.
