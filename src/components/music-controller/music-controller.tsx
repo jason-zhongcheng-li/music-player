@@ -30,7 +30,7 @@ const MusicController = ({ autoPlay }: MusicControllerProps) => {
     if (autoPlay) {
       playOrPause();
     }
-  }, [autoPlay]);
+  }, [autoPlay, playOrPause]);
 
   return (
     <div className={styles.controllers}>

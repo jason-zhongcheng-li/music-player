@@ -33,7 +33,7 @@ const Album = () => {
     if (isPlaying && !showSoundWave) {
       setShowSoundWave(true);
     }
-  }, [isPlaying]);
+  }, [isPlaying, showSoundWave]);
 
   const isOnPlaying = (trackId: number) => {
     return soungSelected?.trackId === trackId && showSoundWave;
