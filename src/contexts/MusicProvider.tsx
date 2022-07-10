@@ -72,11 +72,14 @@ export const MusicProvider = (props) => {
   };
 
   const skipSong = (skipTo: 'rewind' | 'forward') => {
+    const maxIndex = songs.length - 1;
     const newIndex =
-      currSongIndex > 0 && currSongIndex < songs.length - 1
-        ? skipTo === 'forward'
+      skipTo === 'forward'
+        ? currSongIndex < maxIndex
           ? currSongIndex + 1
-          : currSongIndex - 1
+          : currSongIndex
+        : currSongIndex > 0
+        ? currSongIndex - 1
         : currSongIndex;
     setCurrSongIndex(newIndex);
   };
@@ -107,7 +110,7 @@ export const MusicProvider = (props) => {
       playMusic,
     }),
     // eslint-disable-next-line
-    [isPlaying, currSongIndex, songs]
+    [isPlaying, isLoading, skipSong, currSongIndex, songs]
   );
 
   return <MusicContext.Provider value={values}>{childrenProps}</MusicContext.Provider>;

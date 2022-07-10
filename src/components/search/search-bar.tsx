@@ -2,7 +2,6 @@ import { useState, useCallback } from 'react';
 import classnames from 'classnames';
 import { debounce } from 'lodash';
 import { Svg } from '../svg/svg';
-import { Song } from '../../models/song';
 
 import styles from './search-bar.module.scss';
 
@@ -13,7 +12,6 @@ export interface SearchBarProps {
 const SearchBar = (props: SearchBarProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(null);
   const { searchSongs } = props;
-
   const [currentValue, setCurrentValue] = useState<string>();
 
   const handleOnValueChange = useCallback(

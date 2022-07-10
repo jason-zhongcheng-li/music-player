@@ -36,7 +36,7 @@ const Album = (props: AlbumProps) => {
       selectMusic(0);
     }
     return () => resetPageState();
-  }, [collection]);
+  }, [collection, selectMusic]);
 
   useEffect(() => {
     if (isPlaying && !showSoundWave) {
