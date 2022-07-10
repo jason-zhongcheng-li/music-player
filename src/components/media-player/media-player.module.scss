@@ -1,4 +1,4 @@
-@value laptop from '../../styles/metrics.module.scss';
+@value laptop, laptopLarge from '../../styles/metrics.module.scss';
 @value colorBackground, colorBorder from '../../styles/colors.module.scss';
 
 .mediaPlayer {
@@ -23,6 +23,12 @@
 }
 
 @media (min-width: laptop) {
+  .mediaPlayer {
+    max-width: 80vw;
+  }
+}
+
+@media (min-width: laptopLarge) {
   .mediaPlayer {
     max-width: 60vw;
   }
