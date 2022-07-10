@@ -31,6 +31,7 @@ export const MusicProvider = (props) => {
   };
 
   const selectSong = (trackId: number) => {
+    console.log('select song');
     const [soungSelected] = songs.filter((song) => song.trackId === trackId);
     setSoungSelected(soungSelected);
   };
@@ -47,6 +48,7 @@ export const MusicProvider = (props) => {
 
   const lookupSongsInAlbum = async (collectionId: number): Promise<void> => {
     let collection = {} as Collection;
+    setIsPlaying(false);
     setCollection(null);
     const iTunesResponse = await apiService.lookUpSongsInAlbum(collectionId);
     if (iTunesResponse.kind === 'success') {

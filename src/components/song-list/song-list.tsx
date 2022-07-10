@@ -6,7 +6,6 @@ import styles from './song-list.module.scss';
 
 const SongList = () => {
   const { songs, lookupSongsInAlbum } = useITunes();
-  console.log('songs = ', songs);
   const getSongsInAlbum = async (collectionId: number) => {
     await lookupSongsInAlbum(collectionId);
   };

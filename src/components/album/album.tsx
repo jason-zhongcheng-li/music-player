@@ -13,6 +13,11 @@ const Album = () => {
   const [artistViewUrl, setArtistViewUrl] = useState<string>();
   const [showSoundWave, setShowSoundWave] = useState<boolean>(false);
 
+  const resetPageState = () => {
+    setShowSoundWave(false);
+    setArtistViewUrl(null);
+  };
+
   useEffect(() => {
     if (collection?.album) {
       setArtistViewUrl(collection?.album.artworkUrl100);
@@ -21,7 +26,7 @@ const Album = () => {
       // select 1st song as default audio
       selectSong(collection.songs[0]?.trackId);
     }
-    return () => setArtistViewUrl(null);
+    return () => resetPageState();
   }, [collection, selectSong]);
 
   useEffect(() => {
