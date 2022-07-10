@@ -91,7 +91,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 <br>
 <br>
 Thanks for your time to review my code. I expect you are able to understand the design of the project and functions that I have implemented in this application.
-There is only one line of the code that has not been covered in unit test. You can find it in coverage report. I would like to discuss further about the solution if it's possible. <br>
 <br>
 As an candidate doing this code challenge, I have been enjoying hands-on coding, issue investigation, knowledge deep diving and problem solving in this project.
 <br>
