@@ -31,12 +31,9 @@ const Album = (props: AlbumProps) => {
     if (collection?.album) {
       setArtistViewUrl(collection?.album.artworkUrl100);
     }
-    if (Array.isArray(collection?.songs)) {
-      // select 1st song as default audio
-      selectMusic(0);
-    }
+
     return () => resetPageState();
-  }, [collection, selectMusic]);
+  }, [collection]);
 
   useEffect(() => {
     if (isPlaying && !showSoundWave) {

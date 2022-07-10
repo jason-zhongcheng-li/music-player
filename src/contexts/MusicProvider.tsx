@@ -27,15 +27,11 @@ export const MusicProvider = (props) => {
   const [songs, setSongs] = useState<Array<Song>>(null);
   const [currSongIndex, setCurrSongIndex] = useState<number>(-1);
   const apiService: ApiService = new ApiServiceImpl();
-
+  console.log('currSongIndex = ', currSongIndex);
   const audio = useMemo(
     () => (songs && songs[currSongIndex] ? new Audio(songs[currSongIndex]?.previewUrl) : null),
     [currSongIndex, songs]
   );
-
-  const playOrPause = () => {
-    setIsPlaying(!isPlaying);
-  };
 
   useEffect(() => {
     if (!audio) {
@@ -44,7 +40,7 @@ export const MusicProvider = (props) => {
       audio.play();
     }
     return () => {
-      if (audio && isPlaying) {
+      if (audio) {
         audio.pause();
       }
     };
@@ -93,7 +89,14 @@ export const MusicProvider = (props) => {
   };
 
   const playMusic = (autoPlay: boolean): void => {
+    if (currSongIndex < 0) {
+      setCurrSongIndex(0);
+    }
     setIsPlaying(autoPlay);
+  };
+
+  const playOrPause = () => {
+    playMusic(!isPlaying);
   };
 
   const values = useMemo(
@@ -110,7 +113,7 @@ export const MusicProvider = (props) => {
       playMusic,
     }),
     // eslint-disable-next-line
-    [isPlaying, isLoading, skipSong, currSongIndex, songs]
+    [isPlaying, playMusic, currSongIndex, songs]
   );
 
   return <MusicContext.Provider value={values}>{childrenProps}</MusicContext.Provider>;

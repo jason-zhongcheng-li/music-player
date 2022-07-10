@@ -43,3 +43,9 @@
     width: 50%;
   }
 }
+
+@media (min-width: laptop) {
+  .mediaPlayer {
+    max-width: 1028px;
+  }
+}

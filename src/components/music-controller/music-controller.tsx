@@ -1,6 +1,7 @@
 import { Svg } from '../svg/svg';
 import { useITunes } from '../../contexts/MusicProvider';
 import classnames from 'classnames';
+import { debounce } from 'lodash';
 
 import styles from './music-controller.module.scss';
 
@@ -11,11 +12,15 @@ interface MusicControllerProps {
 const MusicController = ({ className }: MusicControllerProps) => {
   const { isPlaying, playOrPause, skipSong } = useITunes();
 
+  const playNext = debounce(async (value: 'rewind' | 'forward') => {
+    skipSong(value);
+  }, 250);
+
   return (
     <div className={classnames(styles.controllers, className)}>
-      <Svg name="rewind" onClick={() => skipSong('rewind')} />
+      <Svg name="rewind" onClick={() => playNext('rewind')} />
       <Svg name={isPlaying ? 'pause' : 'play'} onClick={() => playOrPause()} />
-      <Svg name="forward" onClick={() => skipSong('forward')} />
+      <Svg name="forward" onClick={() => playNext('forward')} />
     </div>
   );
 };

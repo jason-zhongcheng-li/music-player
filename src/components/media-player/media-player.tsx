@@ -40,7 +40,7 @@ const MediaPlayer = () => {
 
   const selectMusic = (index: number, autoPlay?: boolean) => {
     selectSong(index);
-    playMusic(autoPlay);
+    if (autoPlay) playMusic(true);
   };
 
   return (
