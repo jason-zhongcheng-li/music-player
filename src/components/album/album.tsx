@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Image } from '../image/image';
 import { Svg } from '../svg/svg';
-
-import styles from './album.module.scss';
 import { useITunes } from '../../contexts/MusicProvider';
 import SoundWave from '../sound-wave/sound-wave';
 
+import styles from './album.module.scss';
+
 const Album = () => {
-  const { collection, selectSong, isPlaying } = useITunes();
+  const { collection, selectSong, isPlaying, soungSelected } = useITunes();
   const [artistViewUrl, setArtistViewUrl] = useState<string>();
+  const [showSoundWave, setShowSoundWave] = useState<boolean>(false);
 
   useEffect(() => {
     if (collection?.album) {
@@ -19,6 +20,10 @@ const Album = () => {
     }
     return () => setArtistViewUrl(null);
   }, [collection, selectSong]);
+
+  const isOnPlaying = (trackId: number) => {
+    return soungSelected?.trackId === trackId && showSoundWave;
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -38,7 +43,7 @@ const Album = () => {
                 <Svg name="music" />
                 <span>{song.trackCensoredName}</span>
               </div>
-              <SoundWave length={10} enabled={isPlaying} />
+              {isOnPlaying(song.trackId) && <SoundWave length={10} enabled={isPlaying} />}
             </div>
           ))}
       </div>
