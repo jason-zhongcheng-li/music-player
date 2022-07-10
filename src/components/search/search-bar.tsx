@@ -14,6 +14,7 @@ const SearchBar = (props: SearchBarProps) => {
   const { searchSongs } = props;
   const [currentValue, setCurrentValue] = useState<string>();
 
+  // prevent calling async func on every keydown
   const handleOnValueChange = useCallback(
     debounce(async (value: string) => {
       if (!value || value.trim().length === 0) {

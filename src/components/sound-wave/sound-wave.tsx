@@ -5,9 +5,10 @@ import styles from './sound-wave.module.scss';
 interface SoundWaveProps {
   enabled: boolean;
   length: number;
+  className?: string;
 }
 
-const SoundWave = ({ enabled, length }: SoundWaveProps) => {
+const SoundWave = ({ enabled, length, className }: SoundWaveProps) => {
   const waves = () => {
     const bars = [];
     for (let i = 0; i < length; i++) {
@@ -25,7 +26,7 @@ const SoundWave = ({ enabled, length }: SoundWaveProps) => {
     return bars;
   };
 
-  return <div className={styles.bars}>{waves()}</div>;
+  return <div className={classnames(styles.bars, className)}>{waves()}</div>;
 };
 
 export default SoundWave;

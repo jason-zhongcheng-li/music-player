@@ -42,8 +42,12 @@
     justify-content: flex-start;
     padding: 0 2rem;
     cursor: pointer;
-
     outline: 0;
+  }
+
+  &Info {
+    display: flex;
+    flex-direction: row;
   }
 
   span {

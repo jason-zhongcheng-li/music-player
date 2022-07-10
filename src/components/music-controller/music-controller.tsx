@@ -12,6 +12,7 @@ interface MusicControllerProps {
 const MusicController = ({ className }: MusicControllerProps) => {
   const { isPlaying, playOrPause, skipSong } = useITunes();
 
+  // prevent bouncing click
   const playNext = debounce(async (value: 'rewind' | 'forward') => {
     skipSong(value);
   }, 250);

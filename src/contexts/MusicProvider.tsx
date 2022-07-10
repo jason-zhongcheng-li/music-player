@@ -4,13 +4,15 @@ import { ApiService } from '../services/api';
 import { ApiServiceImpl } from '../services/impl/api-service-impl';
 import { Song } from '../models/song';
 import { Collection } from '../models/collection';
+import useViewportSizes from 'use-viewport-sizes';
+import { Breakpoint } from '../helper/string-helper';
 
 interface MusicProviderState {
   isPlaying: boolean;
   isLoading: boolean;
   currSongIndex: number;
-  selectSong: (idx: number) => void;
-  playMusic: (autoPlay: boolean) => void;
+  isMobile: boolean;
+  playMusic: (play: boolean, index?: number) => void;
   playOrPause: () => void;
   skipSong: (skipTo: 'rewind' | 'forward') => void;
   setPlayList: (songs: Array<Song>) => void;
@@ -24,14 +26,28 @@ export const MusicProvider = (props) => {
   const { children: childrenProps } = props;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [songs, setSongs] = useState<Array<Song>>(null);
   const [currSongIndex, setCurrSongIndex] = useState<number>(-1);
+  const [vpWith] = useViewportSizes({ dimension: 'w' });
   const apiService: ApiService = new ApiServiceImpl();
-  console.log('currSongIndex = ', currSongIndex);
+
+  useEffect(() => {
+    if (vpWith < Breakpoint.tablet) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [vpWith]);
+
   const audio = useMemo(
     () => (songs && songs[currSongIndex] ? new Audio(songs[currSongIndex]?.previewUrl) : null),
     [currSongIndex, songs]
   );
+
+  audio?.addEventListener('ended', () => {
+    setIsPlaying(false);
+  });
 
   useEffect(() => {
     if (!audio) {
@@ -40,6 +56,7 @@ export const MusicProvider = (props) => {
       audio.play();
     }
     return () => {
+      // prevent calling play() from another play()
       if (audio) {
         audio.pause();
       }
@@ -58,6 +75,8 @@ export const MusicProvider = (props) => {
 
   const lookupSongsInAlbum = async (collectionId: number): Promise<Collection> => {
     setIsLoading(true);
+    setCurrSongIndex(-1);
+    setIsPlaying(false);
     let collection = {} as Collection;
     const iTunesResponse = await apiService.lookUpSongsInAlbum(collectionId);
     if (iTunesResponse.kind === 'success') {
@@ -78,21 +97,22 @@ export const MusicProvider = (props) => {
         ? currSongIndex - 1
         : currSongIndex;
     setCurrSongIndex(newIndex);
+    if (!isPlaying) {
+      setIsPlaying(true);
+    }
   };
 
   const setPlayList = (songs: Array<Song>) => {
     setSongs(songs);
   };
 
-  const selectSong = (idx: number): void => {
-    setCurrSongIndex(idx);
-  };
-
-  const playMusic = (autoPlay: boolean): void => {
-    if (currSongIndex < 0) {
+  const playMusic = (play: boolean, index?: number): void => {
+    if (currSongIndex < 0 && index === undefined) {
       setCurrSongIndex(0);
+    } else if (index) {
+      setCurrSongIndex(index);
     }
-    setIsPlaying(autoPlay);
+    setIsPlaying(play);
   };
 
   const playOrPause = () => {
@@ -108,12 +128,12 @@ export const MusicProvider = (props) => {
       lookupSongsInAlbum,
       currSongIndex,
       setPlayList,
-      selectSong,
       searchSongs,
       playMusic,
+      isMobile,
     }),
     // eslint-disable-next-line
-    [isPlaying, playMusic, currSongIndex, songs]
+    [isPlaying, playMusic, currSongIndex, songs, isMobile]
   );
 
   return <MusicContext.Provider value={values}>{childrenProps}</MusicContext.Provider>;

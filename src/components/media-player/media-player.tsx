@@ -13,13 +13,11 @@ import { Collection } from '../../models/collection';
 import styles from './media-player.module.scss';
 
 const MediaPlayer = () => {
-  const { searchSongs, isLoading, setPlayList, isPlaying, lookupSongsInAlbum, currSongIndex, selectSong, playMusic } =
+  const { searchSongs, isLoading, setPlayList, isPlaying, lookupSongsInAlbum, currSongIndex, playMusic, isMobile } =
     useITunes();
-  const [vpWith] = useViewportSizes({ dimension: 'w' });
   const [showController, setShowController] = useState<boolean>(false);
   const [searchResult, setSearchResult] = useState<Array<Song>>(null);
   const [collection, setCollection] = useState<Collection>(null);
-
   useEffect(() => {
     if (isPlaying) {
       setShowController(true);
@@ -38,27 +36,24 @@ const MediaPlayer = () => {
     setCollection(collection);
   };
 
-  const selectMusic = (index: number, autoPlay?: boolean) => {
-    selectSong(index);
-    if (autoPlay) playMusic(true);
-  };
-
   return (
     <div className={styles.mediaPlayer}>
       <div className={styles.songList}>
         <SearchBar searchSongs={searchSongsByTerm} />
         <SongList
           searchSongsByAlbum={searchSongsByAlbum}
-          selectMusic={selectMusic}
+          playMusic={playMusic}
           songs={searchResult}
-          autoPlay={vpWith <= Breakpoint.tablet}
+          isPlaying={isPlaying}
+          currSongIndex={currSongIndex}
+          autoPlay={isMobile}
         />
       </div>
-      {vpWith >= Breakpoint.tablet ? (
+      {!isMobile ? (
         <div className={styles.album}>
           <Album
             isLoading={isLoading}
-            selectMusic={selectMusic}
+            playMusic={playMusic}
             currSongIndex={currSongIndex}
             collection={collection}
             isPlaying={isPlaying}

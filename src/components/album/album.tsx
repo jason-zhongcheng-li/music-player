@@ -13,12 +13,12 @@ interface AlbumProps {
   collection: Collection;
   isPlaying: boolean;
   currSongIndex: number;
-  selectMusic: (index: number, autoPlay?: boolean) => void;
+  playMusic: (play: boolean, index?: number) => void;
   isLoading?: boolean;
 }
 
 const Album = (props: AlbumProps) => {
-  const { collection, selectMusic, currSongIndex, isPlaying, isLoading } = props;
+  const { collection, currSongIndex, isPlaying, isLoading, playMusic } = props;
   const [artistViewUrl, setArtistViewUrl] = useState<string>();
   const [showSoundWave, setShowSoundWave] = useState<boolean>(false);
 
@@ -67,8 +67,8 @@ const Album = (props: AlbumProps) => {
                     <Svg name="music" />
                     <span>{song.trackCensoredName}</span>
                   </div>
-                  {isOnPlaying(index) && <SoundWave length={10} enabled={isPlaying} />}
                   <div className={styles.songInfo}>
+                    {isOnPlaying(index) && <SoundWave length={10} enabled={isPlaying} />}
                     <span>{converToMin(song.trackTimeMillis)}</span>
                   </div>
                 </div>
