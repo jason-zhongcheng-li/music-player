@@ -1,0 +1,49 @@
+@value colorBackground, colorBorder, colorBoxShadow from '../../styles/colors.module.scss';
+
+.wrapper {
+  background-color: colorBackground;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.albumArt {
+  padding: 1rem;
+  &Image {
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+  }
+}
+
+.songlist {
+  overflow-y: auto;
+  height: 30rem;
+}
+
+.song {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 2px solid colorBorder;
+  left: 20%;
+
+  &Name {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 2rem;
+    cursor: pointer;
+
+    outline: 0;
+  }
+
+  span {
+    padding-right: 2rem;
+  }
+}
