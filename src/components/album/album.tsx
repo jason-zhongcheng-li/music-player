@@ -4,9 +4,10 @@ import { Svg } from '../svg/svg';
 
 import styles from './album.module.scss';
 import { useITunes } from '../../contexts/MusicProvider';
+import SoundWave from '../sound-wave/sound-wave';
 
 const Album = () => {
-  const { collection, selectSong } = useITunes();
+  const { collection, selectSong, isPlaying } = useITunes();
   const [artistViewUrl, setArtistViewUrl] = useState<string>();
 
   useEffect(() => {
@@ -37,6 +38,7 @@ const Album = () => {
                 <Svg name="music" />
                 <span>{song.trackCensoredName}</span>
               </div>
+              <SoundWave length={10} enabled={isPlaying} />
             </div>
           ))}
       </div>
