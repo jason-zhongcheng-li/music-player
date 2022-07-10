@@ -16,10 +16,13 @@ const SongList = (props: SongListProps) => {
     await lookupSongsInAlbum(song, autoPlay);
   };
 
+  if (!songs) {
+    return null;
+  }
   return (
     <div className={styles.wrapper}>
       {songs
-        ?.filter((song: Song) => !!song.collectionId)
+        .filter((song: Song) => !!song.collectionId)
         .map((song: Song) => (
           <div className={styles.track} key={song.trackId}>
             <Image image={{ url: song.artworkUrl60 }} />

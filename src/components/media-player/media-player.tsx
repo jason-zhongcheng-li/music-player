@@ -8,11 +8,19 @@ import MusicController from '../music-controller/music-controller';
 
 import styles from './media-player.module.scss';
 import Drawer from '../drawer/drawer';
+import { useState, useEffect } from 'react';
 
 const MediaPlayer = () => {
   const { searchSongs, isLoading, collection, selectSong, songs, isPlaying, soungSelected, lookupSongsInAlbum } =
     useITunes();
   const [vpWith] = useViewportSizes({ dimension: 'w' });
+  const [showController, setShowController] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isPlaying) {
+      setShowController(true);
+    }
+  }, [isPlaying]);
 
   return (
     <div className={styles.mediaPlayer}>
@@ -31,7 +39,7 @@ const MediaPlayer = () => {
           />
         </div>
       ) : (
-        <Drawer isOpen={isPlaying} openFrom="bottom" fullwidthMobile>
+        <Drawer isOpen={showController} openFrom="bottom" classes={{ drawer: styles.controller }} fullwidthMobile>
           <MusicController className={(styles.controller, isPlaying && styles.isPlaying)} />
         </Drawer>
       )}

@@ -1,4 +1,4 @@
-@value colorDark, colorBackground, colorGreyDark, colorDarkOpacity25 from '../../styles/colors.module.scss';
+@value colorDark, colorBackground, colorBackgroundWhite, colorGreyDark, colorDarkOpacity25 from '../../styles/colors.module.scss';
 
 .searchBar {
   padding: 1.25rem;
@@ -11,7 +11,7 @@
 
   &Input {
     height: 2.5rem;
-    background: rgba(255, 255, 255, 0.9);
+    background: colorBackgroundWhite;
     border-radius: 6px;
     padding-left: 2.5rem;
     width: 80%;
