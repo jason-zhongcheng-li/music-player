@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Image } from '../image/image';
-import logo from '../../assets/logo.svg';
+
 import { Svg } from '../svg/svg';
 import SoundWave from '../sound-wave/sound-wave';
 import MusicController from '../music-controller/music-controller';
@@ -9,6 +9,7 @@ import { Collection } from '../../models/collection';
 import { Song } from '../../models/song';
 
 import styles from './album.module.scss';
+import Loading from '../loading/loading';
 
 interface AlbumProps {
   collection: Collection;
@@ -51,9 +52,8 @@ const Album = (props: AlbumProps) => {
 
   return (
     <div className={styles.wrapper}>
-      {isLoading ? (
-        <img src={logo} className="App-logo" alt="logo" />
-      ) : (
+      <Loading enabled={isLoading} />
+      {!isLoading && (
         <>
           <div className={styles.albumArt}>
             {artistViewUrl && (
