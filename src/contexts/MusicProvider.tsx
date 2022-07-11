@@ -95,15 +95,17 @@ export const MusicProvider = (props: PropsWithChildren) => {
 
   const skipSong = (skipTo: 'rewind' | 'forward') => {
     const maxIndex = songs.length - 1;
-    const newIndex =
-      skipTo === 'forward'
-        ? currSong.index < maxIndex
-          ? currSong.index + 1
-          : currSong.index
-        : currSong.index > 0
-        ? currSong.index - 1
-        : currSong.index;
-
+    let newIndex = 0;
+    if (currSong?.index >= 0) {
+      newIndex =
+        skipTo === 'forward'
+          ? currSong.index < maxIndex
+            ? currSong.index + 1
+            : currSong.index
+          : currSong.index > 0
+          ? currSong.index - 1
+          : currSong.index;
+    }
     setCurrSong({ trackId: songs[newIndex].trackId, index: newIndex });
     if (!isPlaying) {
       setIsPlaying(true);
