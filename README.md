@@ -1,11 +1,6 @@
-# BCGDV Music Player
+# Music Player
 
 ![](https://img.shields.io/node/v/mocha)
-
-## Description
-
-In this round of BCGDV’s hiring process. BCGDV would like to assess candidates' technical skills with an exercise that should take a few hours.
-
 
 ## Front end Project
 
@@ -86,13 +81,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 # Author
 
-* Jason Li - [LinkedIn](https://www.linkedin.com/in/jason-li-5a943a135/)<br>
-* Full stack Developer (Typecript, ReactJS, Node, NextJS, Express, GraphQL)*
-<br>
-<br>
-Thanks for your time to review my code. I expect you are able to understand the design of the project and functions that I have implemented in this application.
-<br>
-As an candidate doing this code challenge, I have been enjoying hands-on coding, issue investigation, knowledge deep diving and problem solving in this project.
-<br>
-<br>
-I expect this project has exposed my tech stack and skill set to your development and recruitment teams in terms of my job application at BCGDV.
+* Jason Li - [LinkedIn](https://www.linkedin.com/in/jason-li-5a943a135/)
+* Full stack Developer (Typecript, ReactJS, Node, NextJS, Express, GraphQL)

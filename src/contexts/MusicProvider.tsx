@@ -1,11 +1,9 @@
-import { useMemo, useState, useEffect, PropsWithChildren, useLayoutEffect } from 'react';
+import { useMemo, useState, useEffect, PropsWithChildren } from 'react';
 import { createSafeContext, useSafeContext } from '../helper/context-helpers';
 import { ApiService } from '../services/api';
 import { ApiServiceImpl } from '../services/impl/api-service-impl';
 import { Song, CurrentSong } from '../models/song';
 import { Collection } from '../models/collection';
-import useViewportSizes from 'use-viewport-sizes';
-import { Breakpoint } from '../helper/string-helper';
 
 interface MusicProviderState {
   isPlaying: boolean;
@@ -26,26 +24,17 @@ export const MusicProvider = (props: PropsWithChildren) => {
   const { children: childrenProps } = props;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [isMobile, setIsMobile] = useState<boolean>(false);
   const [songs, setSongs] = useState<Array<Song>>(null);
   const [currSong, setCurrSong] = useState<CurrentSong>(null);
   const [playedSongs, setPlayedSongs] = useState<Array<CurrentSong>>([]);
   const apiService: ApiService = new ApiServiceImpl();
-
-  // const [vpWith] = useViewportSizes({ dimension: 'w' });
-  // useLayoutEffect(() => {
-  //   if (vpWith < Breakpoint.tablet) {
-  //     setIsMobile(true);
-  //   } else {
-  //     setIsMobile(false);
-  //   }
-  // }, [vpWith]);
 
   const audio = useMemo(
     () => (songs && currSong && songs[currSong?.index] ? new Audio(songs[currSong?.index]?.previewUrl) : null),
     [currSong]
   );
 
+  // stop visual indicator once the song played
   audio?.addEventListener('ended', () => {
     setIsPlaying(false);
   });
