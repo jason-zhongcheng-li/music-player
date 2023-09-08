@@ -7,7 +7,7 @@
 Typescript + React
 
 ## Requirements
-Use the iTunes affiliate API to develop a simple music player that lets you search by artist and displays the search results on screen. When a song is selected from the list, the song will start to play.
+A simple music player with iTunes affiliate API that lets you search by artist and displays the search results on screen. When a song is selected from the list, the song will start to play.
 
 ### Mobile View
 
